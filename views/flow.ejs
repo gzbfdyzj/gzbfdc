@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
+    <!-- ↑↑↑↑↑↑上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！↑↑↑↑↑↑ -->
+
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!-- Fallback to homescreen for Chrome <39 on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+    <!-- ↓↓↓↓↓↓something about bootstrap && jquery↓↓↓↓↓↓-->
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="//cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- 官网地址：http://medialize.github.com/URI.js/=====相关版本信息http://www.bootcdn.cn/URI.js/-->
+    <script src="//cdn.bootcss.com/URI.js/1.18.1/URI.min.js"></script>
+    <!--云之家JS-API能够提供轻应用在云之家中更好的展示和交互，方便轻应用轻松获得云之家的设备能力。轻应用必须应用于云之家APP（注意的是：目前云之家移动端可以使用全部的JS-API接口、桌面端仅有部分接口使用）中，如果脱离了云之家APP，而在其他的浏览器中打开，则不能使用到云之家的JS-API功能。-->
+    <script src="http://do.yunzhijia.com/pub/js/qingjs.js"></script>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- ↑↑↑↑↑↑something about bootstrap && jquery↑↑↑↑↑↑-->
+    <script src="//cdn.bootcss.com/blueimp-md5/2.3.0/js/md5.min.js"></script>
+    <!--自定义css文件-->
+    <link rel="stylesheet" href="stylesheets/history.css">
+    <!--加载动画-->
+    <link rel="stylesheet" href="stylesheets/loading.css">
+    <title>审批意见</title>
+</head>
+<body style="font-family: 黑体;background-color: whitesmoke">
+<div class="container" ng-controller="flow">
+    <img ng-src="{{flowUrl}}">
+</div>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- AngularJS http://www.bootcdn.cn/angular.js/1.5.8/-->
+<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.js"></script>
+<!--通用js-->
+<script src="javascripts/url.js"></script>
+<!--自定义js文件-->
+<script src="javascripts/flow.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+.container {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+
+span {
+    font-size: larger;
+}
+
+#confirm {
+    color: white;
+}
+
+.list-group {
+    border-radius: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.zhipai-grey {
+    background-color: grey;
+}
+
+.zhipai-blue {
+    background-color: #3cbaff;
+}

@@ -1,0 +1,113 @@
+.container {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+
+#cd-timeline {
+    position: relative;
+    width: 100%;
+    padding: 5px
+}
+
+#cd-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 29%;
+    height: 100%;
+    width: 1px;
+    background: #d7e4ed;
+}
+
+.cd-timeline-item {
+    width: 100%;
+    position: relative;
+    overflow: hidden
+}
+
+.item-left {
+    width: 25%;
+    float: left;
+}
+
+.item-left-time {
+    text-align: center
+}
+
+.item-left-position {
+    text-align: center;
+    font-size: 14px;
+    color: black
+}
+
+.item-icon {
+    width: 8%;
+    height: auto;
+    text-align: center;
+    background-color: white;
+    border-radius: 10%;
+    margin-top: 10px;
+    margin-left: -3px;
+    font-size: 20px;
+}
+
+.item-icon-green {
+    color: green;
+}
+
+.item-icon-red {
+    color: red;
+}
+
+.item-icon-purple {
+    color: purple;
+}
+
+.item-icon-blue {
+    color: dodgerblue;
+}
+
+.item-icon-yellow {
+    color: yellowgreen;
+}
+
+.item-icon-gray {
+    color: gray;
+}
+.item-person {
+    width: 67%;
+    float: right;
+}
+
+.item-person-detail {
+    position: relative;
+    overflow: hidden;
+    border: solid 1px lightgray;
+    border-radius: 2px;
+    padding: 5px;
+}
+
+.person-icon {
+    width: 40px;
+    height: 40px;
+    float: left;
+    border-radius: 5px;
+}
+
+.person-department {
+    float: right;
+    width: 55%;
+    margin-top: 5px;
+    font-size: 12px;
+    color: darkgray;
+}
+
+.person-name {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.person-opinion {
+    color: darkgray;
+}

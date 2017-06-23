@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html ng-app="binding">
+<head lang="en">
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!-- ↑↑↑↑↑↑上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！↑↑↑↑↑↑ -->
+
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!-- Fallback to homescreen for Chrome <39 on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+    <!-- ↓↓↓↓↓↓something about bootstrap && jquery↓↓↓↓↓↓-->
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">-->
+    <link href="//cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <!-- 官网地址：http://medialize.github.com/URI.js/=====相关版本信息http://www.bootcdn.cn/URI.js/-->
+    <script src="//cdn.bootcss.com/URI.js/1.18.1/URI.min.js"></script>
+    <!--云之家JS-API能够提供轻应用在云之家中更好的展示和交互，方便轻应用轻松获得云之家的设备能力。轻应用必须应用于云之家APP（注意的是：目前云之家移动端可以使用全部的JS-API接口、桌面端仅有部分接口使用）中，如果脱离了云之家APP，而在其他的浏览器中打开，则不能使用到云之家的JS-API功能。-->
+    <script src="http://do.yunzhijia.com/pub/js/qingjs.js"></script>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.9/angular.min.js"></script>
+    <script src="//unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+    <script src="//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    <!--<script src="javascripts/bootstrap-paginator.js"></script>-->
+    <!-- ↑↑↑↑↑↑something about bootstrap && jquery↑↑↑↑↑↑-->
+    <!--<script src="//cdn.bootcss.com/blueimp-md5/2.3.0/js/md5.min.js"></script>-->
+    <!--自定义css文件-->
+    <!--<link rel="stylesheet" href="stylesheets/common_simple.css">-->
+    <!--加载动画-->
+    <link rel="stylesheet" href="stylesheets/loading.css">
+    <link rel="stylesheet" href="stylesheets/binding/binding.css">
+    <link rel="stylesheet" ; href="//unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <title>账号绑定</title>
+</head>
+<body>
+<div class="container" ng-controller="list_controller">
+    <div id="spinner">
+        <div class="spinner-container container1">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container2">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container3">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+    </div>
+    <div class="modal fade" id="ncDialog">
+        <div class="modal-dialog model-lg bs-example-modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">绑定NC</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default panel-info">
+                        <div class="panel-heading">云之家信息</div>
+                        <table class="table  table-striped table-hover table-condensed table-responsive">
+                            <tr>
+                                <th>openId</th>
+                                <td>{{currentUser.yzjid}}</td>
+                            </tr>
+                            <tr>
+                                <th>手机号</th>
+                                <td>{{currentUser.yzjmobile}}</td>
+                            </tr>
+                            <tr>
+                                <th>用户名</th>
+                                <td>{{currentUser.yzjname}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="panel panel-default panel-success">
+                        <div class="panel-heading">查询到的NC用户</div>
+                        <table class="table  table-bordered table-striped table-hover table-condensed table-responsive">
+                            <tr>
+                                <th>#</th>
+                                <th>用户名</th>
+                                <th>code</th>
+                                <th>手机</th>
+                                <th>用户id</th>
+                                <th>NC部门</th>
+                                <th>NC职位</th>
+                            </tr>
+                            <tr ng-repeat="ncuser in ncusers">
+                                <th><input type="radio" name="optionsRadios" id="optionsRadios1"
+                                           value="option1"
+                                           ng-click="selectNcUser(ncuser,$index)">
+                                </th>
+                                <td>{{ncuser.ncuser_name}}</td>
+                                <td>{{ncuser.ncuser_code}}</td>
+                                <td>{{ncuser.ncmobile}}</td>
+                                <td>{{ncuser.ncuserid}}</td>
+                                <td>{{ncuser.ncdept}}</td>
+                                <td>{{ncuser.ncjob}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="binding" type="button" class="btn" data-dismiss="modal"
+                            style=" background-color: grey;color: white;"
+                            ng-click="bindNC()"
+                            disabled="disabled">绑定
+                    </button>
+                    <button id="cancel" type="button" class="btn" data-dismiss="modal"
+                            style="background-color: #F4F4F4;" ng-click="disableBind()">取消
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content style=" background-color: #3cbaff;color: white;" ng-click="bindNC()">绑定-->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="delRow">
+        <div class="modal-dialog model-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">确定删除以下人员的绑定信息？</h4>
+                </div>
+                <div class="modal-body">
+                    <p ng-repeat="selectIndex in selectedRows">
+                        {{users[selectIndex].yzjname}}
+                    </p>
+                </div>
+                <div class="modal-footer bg-info">
+                    <button id="confirm" type="button" class="btn" data-dismiss="modal"
+                            style=" background-color: palevioletred;color: white;" ng-click="del()">确定
+                    </button>
+                    <button id="cancel" type="button" class="btn" data-dismiss="modal"
+                            style="background-color: #F4F4F4;">取消
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog model-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">添加行</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="yzj_phone" class="col-sm-2 control-label">手机号</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="yzj_phone" placeholder="手机号">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer bg-info">
+                    <button id="confirm" type="button" class="btn" data-dismiss="modal"
+                            style=" background-color: #3cbaff;color: white;" ng-click="addYzj()">确定
+                    </button>
+                    <button id="cancel" type="button" class="btn" data-dismiss="modal"
+                            style="background-color: #F4F4F4;">取消
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="input-group" style="width: 80%;margin: 0 auto;margin-top: 20px">
+        <input type="text" class="form-control" placeholder="手机号" ng-model="searchMobile">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="searchMapping(searchMobile)">搜索</button>
+            </span>
+    </div>
+    <button class="btn btn-info" data-toggle="modal" data-target="#modal" style="margin-top: 10px">
+        添加行
+    </button>
+    <button class="btn btn-danger" style="margin-top: 10px" data-toggle="modal" data-target="#delRow"
+            ng-click="getSelectedRows()">
+        删除行
+    </button>
+    <div class="table-responsive" style="margin-top: 10px">
+
+        <table ng-table="tableParams"
+               class="table table-bordered table-striped table-hover table-condensed table-responsive">
+            <thead>
+            <tr class="info">
+                <th></th>
+                <th style="white-space:nowrap;text-align: center">云之家openid</th>
+                <th style="white-space:nowrap;text-align: center">云之家用户名</th>
+                <th style="white-space:nowrap;text-align: center">云之家手机号</th>
+                <th style="white-space:nowrap;text-align: center">云之家部门</th>
+                <th style="white-space:nowrap;text-align: center">云之家职位</th>
+                <th style="white-space:nowrap;text-align: center">NCID</th>
+                <th style="white-space:nowrap;text-align: center">NC用户名</th>
+                <th style="white-space:nowrap;text-align: center">NC手机号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in $data" ng-class="{'success' : user.checked}">
+                <td><input type="checkbox" ng-model="user.checked"></td>
+                <td>{{user.yzjid}}</td>
+                <td>{{user.yzjname}}</td>
+                <td>{{user.yzjmobile}}</td>
+                <td>{{user.yzjdept}}</td>
+                <td>{{user.yzjjob}}</td>
+                <td style="width: 130px">
+                    <div>
+                        <span>{{user.ncuser_code}}</span>
+                        <button class="btn btn-xs pull-right" data-toggle="modal" data-target="#ncDialog"
+                                ng-click="getYzjData(user)">
+                            编辑
+                        </button>
+                    </div>
+
+                </td>
+                <td>{{user.ncuser_name}}</td>
+                <td>{{user.ncmobile}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--<div style="text-align: center">-->
+    <!--<ul id="paginator"></ul>-->
+    <!--</div>-->
+    <!-- /input-group -->
+
+</div>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--自定义js文件-->
+<script src="javascripts/url.js"></script>
+<script src="javascripts/binding.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>App跳转</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+</head>
+<body>
+<script src="//cdn.rawgit.com/jonnyreeves/js-logger/master/src/logger.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/device.js/0.2.7/device.min.js"></script>
+<script src="//do.yunzhijia.com/pub/js/qingjs.js"></script>
+<script src="//cdn.bootcss.com/URI.js/1.18.1/URI.min.js"></script>
+<script type="text/javascript">
+    console.log("device.portrait() === %s", device.portrait());
+    console.log("device.landscape() === %s", device.landscape());
+    console.log("device.mobile() === %s", device.mobile());
+    console.log("device.tablet() === %s", device.tablet());
+    console.log("device.ipad() === %s", device.ipad());
+    console.log("device.ipod() === %s", device.ipod());
+    console.log("device.iphone() === %s", device.iphone());
+    console.log("device.android() === %s", device.android());
+    console.log("device.androidTablet() === %s", device.androidTablet());
+    console.log("device.blackberryTablet() === %s", device.blackberryTablet());
+    console.log("device.fxos() === %s", device.fxos());
+    console.log("device.fxosPhone() === %s", device.fxosPhone());
+    console.log("device.fxosTablet() === %s", device.fxosTablet());
+    console.log("device.meego() === %s", device.meego());
+    console.log("device.television() === %s", device.television());
+
+    Logger.useDefaults();
+    Logger.setHandler(function (messages, context) {
+        $.post('/logs', {message: messages[0], level: context.level});
+    });
+    var uri = new URI();
+    uri.hostname('');
+    uri.search(window.location.search);
+    Logger.info('open-seeyon-app');
+    Logger.info(window.navigator.userAgent);
+    var data = uri.query(true);
+    if (device.android()) {
+        uri.protocol('sycmpandroidphone');
+        uri.path('login' + 'p');
+        data.url = 'http://m1.seeyon.com/';
+        Logger.info('platform => android');
+    } else if (device.ipad()) {
+        uri.protocol('sycmpipad');
+        uri.path('p');
+        data.url = 'itms-apps://itunes.apple.com/cn/app/yi-dong-xie-tong-hd/id437471524?mt=8';
+        Logger.info('ipad');
+    } else if (device.iphone()) {
+        uri.protocol('sycmpiphone');
+        uri.path('p');
+        data.url = 'itms-apps://itunes.apple.com/cn/app/yi-dong-xie-tong/id437448699?mt=8';
+        Logger.info('iphone');
+    } else {
+        uri.protocol('https');
+        uri.hostname('example.com');
+        Logger.info('default');
+    }
+    uri.query(URI.buildQuery(data, true, false));
+    Logger.info(URI.decode(uri.toString()));
+    XuntongJSBridge.call(
+        'gotoApp',
+        {"data": URI.decode(uri.toString())},
+        function (result) {
+            if (!result.success) {
+                Logger.info(JSON.stringify(result.error));
+            }
+        });
+</script>
+</body>
+</html>

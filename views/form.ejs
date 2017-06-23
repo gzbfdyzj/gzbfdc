@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html ng-app="form">
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <!-- ↑↑↑↑↑↑上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！↑↑↑↑↑↑ -->
+
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!-- Fallback to homescreen for Chrome <39 on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+    <!-- ↓↓↓↓↓↓something about bootstrap && jquery↓↓↓↓↓↓-->
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link href="//cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <!-- 官网地址：http://medialize.github.com/URI.js/=====相关版本信息http://www.bootcdn.cn/URI.js/-->
+    <script src="//cdn.bootcss.com/URI.js/1.18.1/URI.min.js"></script>
+    <!--云之家JS-API能够提供轻应用在云之家中更好的展示和交互，方便轻应用轻松获得云之家的设备能力。轻应用必须应用于云之家APP（注意的是：目前云之家移动端可以使用全部的JS-API接口、桌面端仅有部分接口使用）中，如果脱离了云之家APP，而在其他的浏览器中打开，则不能使用到云之家的JS-API功能。-->
+    <script src="//do.yunzhijia.com/pub/js/qingjs.js"></script>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- ↑↑↑↑↑↑something about bootstrap && jquery↑↑↑↑↑↑-->
+    <script src="//cdn.bootcss.com/blueimp-md5/2.3.0/js/md5.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/common_index.css">
+    <!--自定义css文件-->
+    <link rel="stylesheet" href="stylesheets/panzoomwidget.css">
+    <!--加载动画-->
+    <link rel="stylesheet" href="stylesheets/loading.css">
+    <title>表单详情</title>
+</head>
+<body style="font-family: 黑体">
+<div class="container" ng-controller="form_detail" style="visibility: hidden">
+    <div id="spinner" style=" margin: auto;position: absolute; top: 0; left: 0; bottom: 0; right: 0;visibility: hidden">
+        <div class="spinner-container container1">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container2">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container3">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header  bg-info">
+                    <!--<button type="button" class="close" data-dismiss="modal"><span-->
+                    <!--aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                    <h4 class="modal-title" id="myModalLabel">指派</h4>
+                </div>
+                <div class="modal-body container-fluid" style="z-index: 999">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            待选人员
+                        </div>
+                        <div class="col-xs-6">
+                            已选人员
+                        </div>
+                    </div>
+                    <div class="row" id="selectDiv">
+                        <div class="col-xs-6" style="padding: 0px 5px">
+                            <ul class="list-group"
+                                style="height: 350px;overflow-x:hidden;overflow-y:scroll;z-index: 999;">
+                                <li class="list-group-item" ng-repeat="assign in assigns"
+                                    ng-click="pushSelecteds($index)">
+
+                                    <span ng-bind="assign.code+' '+assign.name"></span>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-6" style="padding: 0px 5px">
+                            <ul class="list-group"
+                                style="height: 350px;overflow-x:hidden;overflow-y:scroll;z-index: 999;">
+                                <li class="list-group-item" ng-repeat="selected in selecteds"
+                                    ng-click="pushAssigns($index)">
+                                    <span ng-bind="selected.code+' '+selected.name"></span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel" type="button" class="btn glyphicon glyphicon-chevron-right"
+                            ng-click="selectAll()">选定全部
+                    </button>
+                    <button id="cancel" type="button" class="btn glyphicon glyphicon-chevron-left"
+                            ng-click="cancelAll()">取消全部
+                    </button>
+                    <button id="confirm" type="button" class="btn" data-dismiss="modal"
+                            ng-disabled="isZhiPai()" ng-click="zhipai()">
+                        确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog model-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">审批确认</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="Note" name="Note" class="form-control" ng-attr-placeholder="请输入您的意见..."
+                              ng-model="note" ng-change="onInputNote(note)"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel" type="button" class="btn" data-dismiss="modal">取消</button>
+                    <button id="confirm" type="button" style="background-color: #3cbaff" class="btn"
+                            data-dismiss="modal"
+                            ng-disabled="!note" ng-click="submit(currentOper)">确定
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div id="form">
+        <div id="info">
+            <div id="info_person">
+                <img id="info_person_icon" ng-src="{{starter.photoUrl}}" src="img/icon.png" ng-click="openPersonTab()">
+
+                <div id="info_person_detail" ng-click="openPersonTab()">
+                    <h4 id="info_person_name" ng-bind="starter.ncuser_name"></h4>
+                    <h5 id="info_person_position" ng-bind="starter.ncjob"></h5>
+                </div>
+                <div id="form_links">
+                    <img id="form_links_appendix" src="img/appendix.png" ng-click="goAttach()"
+                         style="visibility: hidden"></span>
+                    <img id="form_links_opinions" src="img/approve.png" ng-click="goApprove()"></span>
+                </div>
+
+            </div>
+            <div style="width: 100%;height: 1px;background-color: lightgray"></div>
+        </div>
+        <!--<div id="table" style="width: 100%;;overflow-x: scroll;padding: 10px 6px 0px 6px">-->
+
+        <!--</div>-->
+        <!--<div id="line_top"></div>-->
+        <div id="yusuan_form" style="margin-top:80px">
+            <!--<ul id="myTab" class="nav nav-pills" role="tablist">-->
+            <!--<li role="presentation" ng-repeat="formtitle in formtitles" ng-class="{'active':$index==0}"><a-->
+            <!--href="#form{{$index}}" role="tab"-->
+            <!--data-toggle="tab" ng-bind="formtitle"></a></li>-->
+            <!--</ul>-->
+
+            <!--&lt;!&ndash; Tab panes &ndash;&gt;-->
+            <!--&lt;!&ndash;<panzoomwidget panzoom-id="PanZoom" style="position:absolute;top:10px;left:10px;z-index:1"></panzoomwidget>&ndash;&gt;-->
+            <!--<panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel" ng-style="getPanzoomStype()"-->
+            <!--ng-show="isShowZoom">-->
+            <!--<div class="tab-content">-->
+            <!--<div role="tabpanel" ng-repeat="formcontent in formcontents" class="tab-pane"-->
+            <!--ng-class="{'active':$index==0}"-->
+            <!--id="form{{$index}}" ng-bind-html="formcontent | trustHtml">-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</panzoom>-->
+            <!--<ul id="myTab" class="nav nav-pills" role="tablist">-->
+            <!--<li role="presentation" ng-repeat="formtitle in formtitles" ng-class="{'active':$index==0}"><a-->
+            <!--href="#form{{$index}}" role="tab"-->
+            <!--data-toggle="tab" ng-bind="formtitle"></a></li>-->
+            <!--</ul>-->
+
+            <!-- Tab panes -->
+            <!--<panzoomwidget panzoom-id="PanZoom" style="position:absolute;top:10px;left:10px;z-index:1"></panzoomwidget>-->
+            <panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel" ng-style="getPanzoomStype()"
+                     ng-show="isShowZoom">
+                <div ng-bind-html="formcontent | trustHtml">
+                </div>
+            </panzoom>
+        </div>
+        <div id="form_info" style="visibility: hidden">
+
+            <ul id="myTab" class="nav nav-tabs" role="tablist">
+                <li role="presentation" ng-repeat="head in heads" ng-class="{'active':$index==0}"><a
+                            href="#head{{$index}}" role="tab"
+                            data-toggle="tab" ng-bind="head.tabTitle"></a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" ng-repeat="head in heads" class="tab-pane" ng-class="{'active':$index==0}"
+                     id="head{{$index}}">
+                    <div ng-repeat="item in head.tabdata">
+                        <div style="position: relative;overflow: hidden; padding-bottom: 5px;padding-top: 5px;">
+                            <h5 style=" color: grey;width: 30%;float: left;color: grey;" ng-bind="item.colname">
+                            </h5>
+                            <h5 style=" color: black;width: 70%;float: right;text-align: right;padding-right: 20px;"
+                                ng-bind="item.colvalue">
+                            </h5>
+                        </div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <ul id="myTab" class="nav nav-pills" role="tablist" style="margin-top: 5px">
+                <li role="presentation" ng-repeat="body in bodys" ng-class="{'active':$index==0}"><a
+                            href="#body{{$index}}" role="tab"
+                            data-toggle="tab" ng-bind="body.tabTitle"></a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content" style="margin-top: 10px;margin-right: 15px">
+                <div role="tabpanel" ng-repeat="body in bodys" class="tab-pane" ng-class="{'active':$index==0}"
+                     id="body{{$index}}">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+
+                            <thead>
+                            <tr class="bg-info" style="text-align: center">
+                                <th ng-repeat="body in bodys[0]['tabdata'][0]" ng-bind="body.colname"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="line in body.tabdata">
+                                <td ng-repeat="item in line" style="text-align: center"
+                                    ng-bind-html="item.colvalue | trustHtml">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="row" id="footer" style="margin: 0px;visibility: hidden">
+        <div class="col-xs-4 btn" data-toggle="modal" data-target="#modal"
+             ng-click="oper(disagree)" ng-disabled="isApproved"><h4 id="disagree">不批准</h4></div>
+        <div class="col-xs-4 btn" data-toggle="modal" data-target="#modal" ng-click="oper(mreject)"
+             ng-disabled="isApproved">
+            <h4 id="reject">驳回</h4></div>
+        <div class="col-xs-4 btn" data-toggle="modal" data-target="#modal" ng-click="oper(agree)"
+             ng-disabled="isApproved">
+            <h4 id="agree">批准</h4></div>
+    </div>
+
+
+</div>
+<!--用于缩放pan-zoom依赖的jquery插件 -->
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="javascripts/hamster.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- AngularJS http://www.bootcdn.cn/angular.js/1.5.8/-->
+<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.js"></script>
+<script src="//cdn.bootcss.com/angular.js/1.5.8/angular-cookies.min.js"></script>
+<script src="//cdn.bootcss.com/angular-mousewheel/1.0.4/mousewheel.min.js"></script>
+<script src="javascripts/url.js"></script>
+<!--通用js-->
+<script src="javascripts/panzoom.min.js"></script>
+<script src="javascripts/form.js"></script>
+</body>
+</html>

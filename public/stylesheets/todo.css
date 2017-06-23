@@ -1,0 +1,129 @@
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p {
+    font-family: 黑体, Microsoft YaHei, '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
+body {
+    background-color: #e9ecf1; /*云之家规范：背景颜色*/
+}
+
+.container {
+    padding: 0px;
+}
+
+.list-group {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+.list-group-item > div > h5 {
+    margin-left: 0px
+}
+
+.list-group-item > div > p {
+    color: #9a9a9a;
+    display: inline;
+    font-size: 12px;
+}
+
+.list-group-item > div > p:nth-child(2), .list-group-item > div > p:nth-child(3) {
+    padding-left: 10px;
+}
+
+.list-group-item > div > p:nth-child(3) {
+    color: grey;
+}
+
+.list-group-item > div > h6 {
+    float: right;
+    margin-top: 3px;
+    color: #9a9a9a
+}
+
+.list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    line-height: 1.5;
+}
+
+#myTab {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    background-color: white;
+    position: fixed;
+    bottom: 0px;
+}
+
+.nav-pills > li > a {
+    border-radius: 0px;
+    font-weight: bold;
+}
+
+/*
+覆盖bootstrap里面的li标签前面的边距
+*/
+.nav-pills > li + li {
+    margin-left: 0px;
+}
+
+.nav-pills > li {
+    margin-left: 0px;
+    text-align: center;
+    width: 33%
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    line-height: 1.5;
+}
+
+a {
+    color: #9a9a9a;
+    font-size: 15px;
+    background-color: white;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    color: #3cbaff;
+    background-color: #ffffff;
+    /*border-bottom: solid #3cbaff 2px;*/
+    font-size: 15px;
+}
+
+.dropdown-menu > li > a {
+    padding: 5px;
+}
+#vertical_line {
+    width: 1px;
+    height: 20px;
+    background-color: #e9ecf1;
+    display: inline;
+    float: right;
+    margin-right: -15px
+}
+
+#mytodohd::before {
+    top: -12px;
+    right: -14px;
+    height: 16px;
+    position: absolute;
+    content: '10';
+    width: 16px;
+    border-radius: 8px;
+    background: red;
+    text-align: center;
+    font-size: 12px;
+    color: white;
+}
+
+#mytodohd {
+    position: relative;
+}
+

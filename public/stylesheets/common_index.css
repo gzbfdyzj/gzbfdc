@@ -1,0 +1,165 @@
+/*
+此css适用最基本的表单详情页，每个表单详情页都应该包含此文件。（包括个人信息，附件、历史意见图标，底部同意与不同意，弹出框，以及信息Item的样式）
+*/
+.container {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+
+body {
+    font-family: 黑体
+}
+#form {
+    margin: 0px 0px 65px 0px;
+    padding: 0px;
+}
+
+td {
+    white-space: nowrap;
+}
+
+table {
+    width: 100%;
+}
+
+#info {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: 1;
+}
+
+#info_person {
+    padding: 12px 12px 6px 12px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#info_person_icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    float: left;
+    border: solid 1px transparent;
+}
+
+#info_person_detail {
+    float: left;
+    margin-left: 20px;
+    width: 48%;
+}
+
+#info_person_name {
+    margin-top: 2px;
+}
+
+#info_person_position {
+    color: gray;
+    margin-top: 15px;
+}
+
+#form_links {
+    float: right;
+    width: 80px;
+    margin-top: 5px;
+}
+
+#form_links_appendix, #form_links_opinions {
+    width: 30px;
+    height: 38px;
+    float: left;
+    font-size: 28px;
+    color: #3cbaff;
+    margin-top: 5px;
+}
+
+#form_links_opinions {
+    margin-left: 20px;
+}
+
+#line_top {
+    width: 100%;
+    height: 1px;
+    background-color: grey;
+    margin-top: 90px;
+    background-color: lightgray;
+}
+
+#form_info {
+    margin-top: 0px;
+    padding-left: 15px;
+    width: 100%;
+    z-index: 0;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: lightgray;
+}
+
+#disagree {
+    margin-bottom: 0px;
+    margin-top: 15px;
+    margin-left: 0px;
+}
+
+#agree {
+    margin-bottom: 0px;
+    margin-top: 15px;
+    margin-left: 0px;
+}
+
+#reject {
+    margin-bottom: 0px;
+    margin-top: 15px;
+    margin-left: 0px;
+}
+
+#footer {
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+    background-color: transparent;
+    position: fixed;
+    bottom: 0;
+}
+
+#footer > div:first-child {
+    height: 60px;
+    padding: 0px;
+    text-align: center;
+    background-color: #F4F4F4;
+}
+
+#footer > div:nth-child(2) {
+    height: 60px;
+    padding: 0px;
+    text-align: center;
+    color: white;
+    background-color: hotpink;
+}
+
+#footer > div:nth-child(3) {
+    height: 60px;
+    padding: 0px;
+    text-align: center;
+    color: white;
+    background-color: #3cbaff;
+}
+
+#footer > .btn {
+    border-radius: 0px;
+}
+
+#confirm {
+    background-color: #3cbaff;
+    color: white;
+}
+
+#cancel {
+    background-color: #F4F4F4;
+}
