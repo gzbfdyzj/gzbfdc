@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="stylesheets/panzoomwidget.css">
     <!--加载动画-->
     <link rel="stylesheet" href="stylesheets/loading.css">
+    <link rel="stylesheet" href="stylesheets/form.css">
     <title>表单详情</title>
 </head>
 <body style="font-family: 黑体">
@@ -155,8 +156,8 @@
                 </div>
                 <div id="form_links">
                     <img id="form_links_appendix" src="img/appendix.png" ng-click="goAttach()"
-                         style="visibility: hidden"></span>
-                    <img id="form_links_opinions" src="img/approve.png" ng-click="goApprove()"></span>
+                         style="visibility: hidden">
+                    <!-- <img id="form_links_opinions" src="img/approve.png" ng-click="goApprove()"></span> -->
                 </div>
 
             </div>
@@ -237,8 +238,8 @@
                         <table class="table table-bordered table-striped">
 
                             <thead>
-                            <tr class="bg-info" style="text-align: center">
-                                <th ng-repeat="body in bodys[0]['tabdata'][0]" ng-bind="body.colname"></th>
+                            <tr class="bg-info" >
+                                <th ng-repeat="body in bodys[0]['tabdata'][0]" ng-bind="body.colname" style="text-align: center"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -252,7 +253,52 @@
                     </div>
                 </div>
             </div>
+            <!-- 2017.06.22增加历史审批页面样式，时间正序 -->
+            <ul id="myTab" class="nav nav-pills ls1" role="tablist" style="margin-top: 5px">
+                <li role="presentation" ng-class="{'active':$index!=0}"><a
+                            href="#body{{$index}}" role="tab"
+                            data-toggle="tab">审批信息</a></li>
+                   <!--  <li role="presentation" ng-class="{'active':$index==0}"><a
+                            href="#body{{$index}}" role="tab" data-toggle="tab">审批信息</a></li> -->
+                    
+            </ul>
 
+            <!-- Tab panes 详情-->
+            <div class="tab-content ls2" style="margin-top: 10px;margin-right: 15px">
+                <div role="tabpanel" ng-repeat="history in historys" class="tab-pane" ng-class="{'active':$index==0}"
+                     >
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped spls">
+
+                            <thead>
+                            <tr class="bg-info">
+                                <th>审批人</th>
+                                <!-- <th>审批状况</th> -->
+                                <th>审批意见</th>
+                                <th>批语</th>
+                                <th>审核日期</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="history in historys" style="text-align:left">
+                                <td ng-bind="history.checkman" 
+                                    >
+                                </td>
+                                <td ng-bind="history.approveresult" 
+                                    >
+                                </td>
+                                <td ng-bind="history.checknote" 
+                                    >
+                                </td>
+                                <td ng-bind="history.dealdate" 
+                                    >
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
