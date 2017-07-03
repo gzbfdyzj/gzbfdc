@@ -70,15 +70,15 @@ table {
 #form_links_appendix, #form_links_opinions {
     width: 30px;
     height: 38px;
-    float: left;
+    float: right;
     font-size: 28px;
     color: #3cbaff;
     margin-top: 5px;
 }
 
-#form_links_opinions {
-    margin-left: 20px;
-}
+// #form_links_opinions {
+//     margin-left: 20px;
+// }
 
 #line_top {
     width: 100%;
