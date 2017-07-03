@@ -84,6 +84,7 @@ app.filter('trustHtml', function ($sce) {
         });
     };
     if (urlObj.isFromApp == 'true') {
+        console.log(urlObj)
         $http({
             method: 'get',
             url: requrl,
@@ -104,6 +105,8 @@ app.filter('trustHtml', function ($sce) {
                 }
             } else {
                 toastr.error('该任务已被其他人处理');
+                document.querySelector('.ls1').style.visibility = 'hidden';
+                document.querySelector('.ls2').style.visibility = 'hidden';
             }
 
         });
@@ -157,14 +160,14 @@ app.filter('trustHtml', function ($sce) {
         uri.addQuery('billtype', urlObj.billtype);
         window.location = uri.toString();
     };
-    $scope.goApprove = function () {
-        var uri = new URI('/history');
-        uri.addQuery('billid', urlObj.billid);
-        uri.addQuery('billtype', urlObj.billtype);
-        uri.addQuery('taskid', urlObj.taskid);
-        uri.addQuery('ts', $scope.task.data.ts);
-        window.location = uri.toString();
-    };
+    // $scope.goApprove = function () {
+    //     var uri = new URI('/history');
+    //     uri.addQuery('billid', urlObj.billid);
+    //     uri.addQuery('billtype', urlObj.billtype);
+    //     uri.addQuery('taskid', urlObj.taskid);
+    //     uri.addQuery('ts', $scope.task.data.ts);
+    //     window.location = uri.toString();
+    // };
     $scope.assigns = [];
     $scope.selecteds = [];
     $scope.selectedUserIdStr = '';
@@ -277,6 +280,7 @@ app.filter('trustHtml', function ($sce) {
             }
         }
     ).success(function (response) {
+        //附件
             document.getElementById('spinner').style.visibility = 'hidden';
             console.log(response);
             if (response.data.filecount > 0) {
@@ -334,6 +338,7 @@ app.filter('trustHtml', function ($sce) {
                         }
                     }
                     $scope.bodys = response.data.taskbill.body.tabContent;
+                    console.log($scope.bodys[0]['tabdata'][0])
                     $('#myTab a').click(function (e) {
                         e.preventDefault();
                         $(this).tab('show')
@@ -344,5 +349,33 @@ app.filter('trustHtml', function ($sce) {
                 }
             //}
         });
+    // 2017.06.22增加历史审批code
+    $http({
+        method: 'get',
+        url: requrl,
+        params: {
+            billid: urlObj.billid,
+            billtype: urlObj.billtype,
+            method: 'getApproveHistoryToForm'
+        }
+    }).success(function (response) {
+        console.log(response);
+        if (response.flag == 0) {
+                $scope.task = response;
+            //预算表单的三种类型：T1
+            //if (response.data.billtype == 'T1') {
+            //    document.getElementById('yusu
+            $scope.historys = response.data;
+            console.log($scope.historys)
+            $('#myTab a').click(function (e) {
+                        e.preventDefault();
+                        $(this).tab('show')
+                    });
+            $('#myTab a:first').tab('show');
+            
+        } else {
+            toastr.error(response.desc);
+        }
+    });
 
 });
