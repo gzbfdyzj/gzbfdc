@@ -73,7 +73,67 @@ app.controller('list_controller', function ($scope, $http, $document, $location,
         }
 
     };
-
+    $scope.filterUnBindNCUserN = function(){
+            $http({
+                method: 'get',
+                url: requrl,
+                //url: 'json/searchMappingByMobile',
+                params: {
+                    //phone: mobile,//chenhao
+                    "canBeBind":"N",//jizhe
+                    "method":"getUnBindUserMappingInfo"//jizhe
+                    //method: 'getAllUserMappingInfo'//chenhao
+                }
+            }).success(function (response) {
+                console.log(response);
+                if (response.flag == 0) {
+                    //$scope.users = response.data;//chenhao
+                    $scope.users = [];//jizhe old fixed
+                    $scope.users.push(response.data);//jizhe old fixed
+                    // var b = [];
+                    // b.push(response.data);
+                    // console.log(b)
+                    $scope.tableParams = new NgTableParams({}, {
+                        counts: [],
+                        paginationMaxBlocks: 6,
+                        paginationMinBlocks: 2, dataset: response.data
+                    });
+                } else {
+                    toastr.error(response.desc);
+                }
+            });//success
+    }
+    $scope.filterUnBindNCUserY = function(){
+          
+            $http({
+                method: 'get',
+                url: requrl,
+                //url: 'json/searchMappingByMobile',
+                params: {
+                    //phone: mobile,//chenhao
+                    "canBeBind":"Y",//jizhe
+                    "method":"getUnBindUserMappingInfo"//jizhe
+                    //method: 'getAllUserMappingInfo'//chenhao
+                }
+            }).success(function (response) {
+                console.log(response);
+                if (response.flag == 0) {
+                    //$scope.users = response.data;//chenhao
+                    $scope.users = [];//jizhe old fixed
+                    $scope.users.push(response.data);//jizhe old fixed
+                    var c = [];
+                    // c.push(response.data);
+                    $scope.tableParams = new NgTableParams({}, {
+                        counts: [],
+                        paginationMaxBlocks: 6,
+                        paginationMinBlocks: 2, dataset: response.data
+                    });
+                } else {
+                    toastr.error(response.desc);
+                }
+            });
+        // }
+    }
     $scope.tableSelection = {};
     $scope.selectedRows = [];
     //$scope.selectedOpenIds = [];
@@ -250,11 +310,12 @@ app.controller('list_controller', function ($scope, $http, $document, $location,
             }
         ).success(function (response) {
                 document.getElementById('spinner').style.visibility = 'hidden';
+                console.log("绑定nc用户")
                 $scope.disableBind();
                 if (response.flag == 0) {// todo 125
                     var currentIndex = '';
                     for (var i = 0; i < $scope.users.length; i++) {// todo 125
-                        if ($scope.users[i]['yzjid'] == $scope.currentUser.yzjid) {
+                        if ($scope.users[i]['yzjid'] !== $scope.currentUser.yzjid) {
                             currentIndex = i;
                             $scope.users[currentIndex]['ncuser_code'] = $scope.currentSelectedNcUser.ncuser_code;
                             $scope.users[currentIndex]['ncuser_name'] = $scope.currentSelectedNcUser.ncuser_name;
